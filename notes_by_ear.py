@@ -71,7 +71,7 @@ class NotesByEarScreen:
 
     def draw(self):
         self.screen.fill((0, 240, 100))
-        self.piano.draw()
+        pressed_key = self.piano.draw()
         self.screen.blit(self.logo, (-20, 0))
         self.next = self.switch()
         pygame.display.update()

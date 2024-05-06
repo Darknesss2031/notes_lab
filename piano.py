@@ -108,9 +108,11 @@ class Piano:
         for i in range(7):
             self.keys.append(WhiteButton(whites[i], 50, 150, (start, 300), self.screen, self.black_keys))
             start += 50
-        self.pressed = dict()
+        self.pressed = None
 
     def draw(self):
-        self.pressed = dict()
+        self.pressed = None
         for key in reversed(self.keys):
-            self.pressed[key.name] = key.draw()
+            if key.draw():
+                self.pressed = key.name
+        return self.pressed
