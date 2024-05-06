@@ -1,6 +1,7 @@
 """This file contains notes by ear logic"""
 import pygame
 import os
+from piano import Piano
 
 
 class GameMenuButton:
@@ -49,7 +50,7 @@ class GameMenuButton:
         return False
 
 
-class GameMenuScreen:
+class NotesByEarScreen:
 
     def __init__(self):
         self.screen = pygame.display.set_mode((500, 500))
@@ -65,31 +66,18 @@ class GameMenuScreen:
         self.ear_start = False
         self.qcof_start = False
         self.key_start = False
+        self.piano = Piano(self.screen)
         self.next = self
 
     def draw(self):
         self.screen.fill((0, 240, 100))
-        self.clicked_stave = self.stave_btn.draw()
-        self.clicked_neck = self.neck_btn.draw()
-        self.clicked_ear = self.ear_btn.draw()
-        self.clicked_qcof = self.qcof_btn.draw()
-        self.clicked_key = self.key_btn.draw()
+        self.piano.draw()
         self.screen.blit(self.logo, (-20, 0))
-        self.next = self.switch(self.clicked_stave, self.clicked_neck, self.clicked_ear, self.clicked_qcof, self.clicked_key)
+        self.next = self.switch()
         pygame.display.update()
     
     def update(self):
         return self.next
 
-    def switch(self, stave, neck, ear, qcof, key):
-        if stave:
-            return self
-        if neck:
-            return self
-        if ear:
-            return self
-        if qcof:
-            return self
-        if key:
-            return self
+    def switch(self):
         return self

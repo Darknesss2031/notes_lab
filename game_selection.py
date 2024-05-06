@@ -1,6 +1,7 @@
 """This file contains game choosing logic"""
 import pygame
 import os
+from notes_by_ear import NotesByEarScreen
 
 
 class GameMenuButton:
@@ -87,7 +88,7 @@ class GameMenuScreen:
         if neck:
             return self
         if ear:
-            return self
+            return NotesByEarScreen()
         if qcof:
             return self
         if key:
