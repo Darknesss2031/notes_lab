@@ -1,9 +1,5 @@
 import pygame
-
-
-BLACK = (0, 0, 0)
-WHITE = (255, 255, 255)
-GRAY = (128, 128, 128)
+from tools import WHITE, BLACK, GRAY
 
 
 class WhiteButton:
