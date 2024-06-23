@@ -87,11 +87,9 @@ class GameMenuScreen:
 
     def __init__(self):
         self.screen = pygame.display.get_surface()
-        self.stave_btn = ClassicButton("Notes\non the stave", 120, 120, (46, 230), self.screen)
-        self.neck_btn = ClassicButton("Notes\non the neck", 120, 120, (192, 230), self.screen)
-        self.ear_btn = ClassicButton("Notes by ear", 120, 120, (338, 230), self.screen)
-        self.qcof_btn = ClassicButton("Quarto circle\nof fifths", 120, 120, (125, 370), self.screen)
-        self.key_btn = ClassicButton("Key of a melody", 120, 120, (275, 370), self.screen)
+        self.stave_btn = ClassicButton("Notes\non the stave", 120, 120, (46, 280), self.screen)
+        self.neck_btn = ClassicButton("Notes\non the neck", 120, 120, (192, 280), self.screen)
+        self.ear_btn = ClassicButton("Notes by ear", 120, 120, (338, 280), self.screen)
         self.logo = pygame.image.load(os.path.join(os.getcwd(), "assets", "logo.png"))
         self.logo = pygame.transform.scale(self.logo, (500,200))
         self.back = ClassicButton("Back", 50, 30, (440, 460), self.screen)
@@ -107,27 +105,21 @@ class GameMenuScreen:
         self.clicked_stave = self.stave_btn.draw()
         self.clicked_neck = self.neck_btn.draw()
         self.clicked_ear = self.ear_btn.draw()
-        self.clicked_qcof = self.qcof_btn.draw()
-        self.clicked_key = self.key_btn.draw()
         self.clicked_back = self.back.draw()
         self.screen.blit(self.logo, (-20, 0))
-        self.next = self.switch(self.clicked_stave, self.clicked_neck, self.clicked_ear, self.clicked_qcof, self.clicked_key, self.clicked_back)
+        self.next = self.switch(self.clicked_stave, self.clicked_neck, self.clicked_ear, self.clicked_back)
         pygame.display.update()
     
     def update(self):
         return self.next
 
-    def switch(self, stave, neck, ear, qcof, key, back):
+    def switch(self, stave, neck, ear, back):
         if stave:
             return NotesOnStaveScreen()
         if neck:
             return self
         if ear:
             return NotesByEarScreen()
-        if qcof:
-            return self
-        if key:
-            return self
         if back:
             return MenuScreen()
         return self
