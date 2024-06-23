@@ -157,3 +157,44 @@ class TextLabel:
         pygame.draw.rect(self.screen, self.top_color, self.top_rect)
         for surf, rect in zip(self.text_surf, self.text_rect):
             self.screen.blit(surf, rect)
+
+
+class ImageButton:
+
+    def __init__(self, width, height, pos, screen, img_path, border=6):
+        self.screen = screen
+        self.width, self.height = width, height
+        self.pos = pos
+        self.border = border
+        self.frame = 2
+        self.top_color = BORDER
+        self.pressed = False
+        self.top_rect = pygame.Rect(pos, (width, height))
+        self.image = pygame.transform.scale(pygame.image.load(img_path), (width, height))
+
+    def draw(self):
+        pygame.draw.rect(self.screen, self.top_color, self.top_rect, self.frame, border_radius=self.border)
+        self.screen.blit(self.image, self.pos)
+        return self.covered()
+
+    def covered(self):
+        """Returns True if the button was pressed, False otherwise"""
+        mouse_pos = pygame.mouse.get_pos()
+        if self.top_rect.collidepoint(mouse_pos):
+            if pygame.mouse.get_pressed()[0]:
+                self.pressed = True
+            elif self.pressed:
+                self.pressed = False
+                return True
+
+            if self.pressed:
+                self.top_color = DARK_BLUE
+            else:
+                self.top_color = BLUE
+            self.frame = 0
+        else:
+            self.pressed = False
+            self.top_color = BORDER
+            self.frame = 2
+        return False
+        

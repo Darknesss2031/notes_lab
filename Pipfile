@@ -5,6 +5,8 @@ name = "pypi"
 
 [packages]
 pygame = "*"
+playsound = "*"
+pydub = "*"
 
 [dev-packages]
 

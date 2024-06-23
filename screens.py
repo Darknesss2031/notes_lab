@@ -1,7 +1,8 @@
 import pygame
 from tools import ClassicButton, SwitchButton, GREEN, TextLabel
 import os
-from notes_on_stave import GameProcess
+from notes_on_stave import GameProcess as NotesOnStaveGame
+from notes_by_ear import GameProcess as NotesByEarGame
 from piano import Piano
 
 
@@ -46,7 +47,7 @@ class NotesOnStaveScreen:
     def __init__(self):
         self.screen = pygame.display.get_surface()
         self.piano = Piano(self.screen)
-        self.game = GameProcess(self.screen, 3)
+        self.game = NotesOnStaveGame(self.screen, 3)
         self.game.start_game()
         self.switch_btn = SwitchButton(50, 20, (225, 260), self.screen,
                                        os.path.join(os.getcwd(), "assets", "key.png"),
@@ -78,7 +79,7 @@ class NotesOnStaveScreen:
             return GameMenuScreen()
         if finished:
             self.game.end_game()
-            return GameOverScreen(f"{self.game.correct} of {self.game.maxscore}")
+            return GameOverScreen(NotesOnStaveScreen, f"{self.game.correct} of {self.game.maxscore}")
         return self
 
 
@@ -122,7 +123,7 @@ class GameMenuScreen:
         if neck:
             return self
         if ear:
-            return self
+            return NotesByEarScreen()
         if qcof:
             return self
         if key:
@@ -134,11 +135,12 @@ class GameMenuScreen:
 
 class GameOverScreen:
 
-    def __init__(self, score=""):
+    def __init__(self, again_screen, score=""):
         self.screen = pygame.display.get_surface()
         self.retry_btn = ClassicButton("Try again", 200, 40, (150, 250), self.screen, 0)
         self.menu_btn = ClassicButton("Menu", 200, 40, (150, 300), self.screen, 0)
         self.label = TextLabel("GAME OVER!", 200, 50, (150, 100), self.screen, 50)
+        self.again_screen = again_screen
         self.results = TextLabel(f"Your score is: {score}", 200, 30, (150, 200), self.screen, 20)
 
     def draw(self):
@@ -157,5 +159,43 @@ class GameOverScreen:
         if menu:
             return GameMenuScreen()
         if retry:
-            return NotesOnStaveScreen()
+            return self.again_screen()
+        return self
+
+
+class NotesByEarScreen:
+
+    def __init__(self):
+        self.screen = pygame.display.get_surface()
+        self.piano = Piano(self.screen)
+        self.game = NotesByEarGame(self.screen, 3)
+        self.back = ClassicButton("Back", 50, 30, (440, 460), self.screen)
+        self.next = self
+        self.game.start_game()
+
+    def draw(self):
+        self.screen.fill(GREEN)
+        if self.game.next_btn.draw():
+            self.game.next_note()
+        if self.game.retry_btn.draw():
+            self.game.play_note()
+        self.game.score.draw()
+        self.game.answer.draw()
+        back = self.back.draw()
+        pressed_key = self.piano.draw()
+        if pressed_key != None:
+            self.game.process_key(pressed_key)
+        self.next = self.switch(back, self.game.STOP)
+        pygame.display.update()
+
+    def update(self):
+        return self.next
+    
+    def switch(self, back, finished):
+        if back:
+            self.game.end_game()
+            return GameMenuScreen()
+        if finished:
+            self.game.end_game()
+            return GameOverScreen(NotesByEarScreen, f"{self.game.correct} of {self.game.maxscore}")
         return self
