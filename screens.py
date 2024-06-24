@@ -1,9 +1,10 @@
 import pygame
-from tools import ClassicButton, SwitchButton, GREEN, TextLabel
+from tools import ClassicButton, SwitchButton, GREEN, TextLabel, ImageButton
 import os
 from notes_on_stave import GameProcess as NotesOnStaveGame
 from notes_by_ear import GameProcess as NotesByEarGame
 from piano import Piano
+from stats import StatsRepository
 
 
 class MenuScreen:
@@ -36,7 +37,7 @@ class MenuScreen:
         if start:
             return GameMenuScreen()
         if stats:
-            return self
+            return StatsScreen()
         if setts:
             return self
         return self
@@ -198,4 +199,81 @@ class NotesByEarScreen:
         if finished:
             self.game.end_game()
             return GameOverScreen(NotesByEarScreen, f"{self.game.correct} of {self.game.maxscore}")
+        return self
+
+
+class StatsScreen:
+
+    NEXT_BTN = os.path.join(os.getcwd(), "assets", "next.png")
+    PREV_BTN = os.path.join(os.getcwd(), "assets", "prev.png")
+
+    def __init__(self):
+        self.offset = 0
+        self.limit = 10
+        self.screen = pygame.display.get_surface()
+        self.stats = StatsRepository()
+        data = self.stats.get_games(self.offset, self.limit)
+        self.games_list = list(
+            ClassicButton(f"{data[i][1]}        {data[i][2]}/{data[i][3]}        {data[i][4]}", 250, 30, (125, 100+i*28), self.screen, clickable=False, border=0) for i in range(len(data))
+        )
+        self.next = self
+        self.current_page = 1
+        self.name = TextLabel("Games History", 200, 30, (150, 60), self.screen)
+        self.back = ClassicButton("Back", 50, 30, (440, 460), self.screen)
+        self.total_pages = max(1, (self.stats.number_of_games()+self.limit-1) // self.limit)
+        self.previous_btn = ImageButton(30, 30, (175, 420), self.screen, self.PREV_BTN, clickable=False)
+        if self.total_pages == 1:
+            self.next_btn = ImageButton(30, 30, (295, 420), self.screen, self.NEXT_BTN, clickable=False)
+        else:
+            self.next_btn = ImageButton(30, 30, (295, 420), self.screen, self.NEXT_BTN)
+        self.pages_label = TextLabel(f"Page {self.current_page}/{self.total_pages}", 90, 30, (205, 420), self.screen, 30)
+
+    def draw(self):
+        self.screen.fill(GREEN)
+        clicked_prev = self.previous_btn.draw()
+        clicked_next = self.next_btn.draw()
+        clicked_back = self.back.draw()
+        self.name.draw()
+        if self.current_page != 1 and clicked_prev:
+            self.previous_page()
+        elif self.current_page != self.total_pages and clicked_next:
+            self.next_page()
+        for label in self.games_list:
+            label.draw()
+        self.pages_label.draw()
+        self.next = self.switch(clicked_back)
+        pygame.display.update()
+
+    def next_page(self):
+        self.offset += self.limit
+        self.current_page += 1
+        if self.current_page == 2:
+            self.previous_btn = ImageButton(30, 30, (175, 420), self.screen, self.PREV_BTN)
+        if self.current_page == self.total_pages:
+            self.next_btn = ImageButton(30, 30, (295, 420), self.screen, self.NEXT_BTN, clickable=False)
+        data = self.stats.get_games(self.offset, self.limit)
+        self.games_list = list(
+            ClassicButton(f"{data[i][1]}        {data[i][2]}/{data[i][3]}        {data[i][4]}", 250, 30, (125, 100+i*28), self.screen, clickable=False, border=0) for i in range(len(data))
+        )
+        self.pages_label = TextLabel(f"Page {self.current_page}/{self.total_pages}", 90, 30, (205, 420), self.screen, 30)
+
+    def previous_page(self):
+        self.offset -= self.limit
+        self.current_page -= 1
+        if self.current_page == 1:
+            self.previous_btn = ImageButton(30, 30, (175, 420), self.screen, self.PREV_BTN, clickable=False)
+        if self.current_page == self.total_pages - 1:
+            self.next_btn = ImageButton(30, 30, (295, 420), self.screen, self.NEXT_BTN)
+        data = self.stats.get_games(self.offset, self.limit)
+        self.games_list = list(
+            ClassicButton(f"{data[i][1]}        {data[i][2]}/{data[i][3]}        {data[i][4]}", 250, 30, (125, 100+i*28), self.screen, clickable=False, border=0) for i in range(len(data))
+        )
+        self.pages_label = TextLabel(f"Page {self.current_page}/{self.total_pages}", 90, 30, (205, 420), self.screen, 30)
+
+    def update(self):
+        return self.next
+
+    def switch(self, back):
+        if back:
+            return MenuScreen()
         return self

@@ -8,6 +8,8 @@ from tools import BLACK, GREEN
 import random
 from threading import Thread
 from tools import ClassicButton, ScoreLabel
+from stats import StatsRepository
+from datetime import datetime
 
 
 notes_for_gen = ["b2", "a2", "g2", "f2", "e2", "d2", "c2", "b1", "a1", "g1", "f1", "e1", "d1", "c1"]
@@ -135,6 +137,7 @@ class GameProcess:
         self.generated = 0
         self.ALTER = alter
         self.score = ScoreLabel(50, 20, (225, 235), self.screen, self.maxscore)
+        self.stats = StatsRepository()
 
         def move(self):
             while True:
@@ -162,6 +165,7 @@ class GameProcess:
     def end_game(self):
         self.STOP = True
         self.ticker.join()
+        self.stats.add_game("Notes on stave", self.correct, self.maxscore, datetime.now().strftime("%d-%m-%Y"))
     
     def choose_icon(self, name, alter, oct):
         return "note.png"
