@@ -10,6 +10,24 @@ from piano import Piano
 from stats import StatsRepository
 
 
+class Settings:
+    localization = "en"
+    notes_on_stave = 3
+    notes_by_ear = 3
+
+    @classmethod
+    def set_notes_on_stave(cls, n):
+        cls.notes_on_stave = n
+
+    @classmethod
+    def set_notes_by_ear(cls, n):
+        cls.notes_by_ear = n
+
+    @classmethod
+    def set_localization(cls, loc):
+        cls.localization = loc
+
+
 class MenuScreen:
 
     def __init__(self):
@@ -51,7 +69,7 @@ class NotesOnStaveScreen:
     def __init__(self):
         self.screen = pygame.display.get_surface()
         self.piano = Piano(self.screen)
-        self.game = NotesOnStaveGame(self.screen, 3)
+        self.game = NotesOnStaveGame(self.screen, Settings.notes_on_stave)
         self.game.start_game()
         self.switch_btn = SwitchButton(50, 20, (225, 260), self.screen,
                                        os.path.join(os.getcwd(), "assets", "key.png"),
@@ -157,7 +175,7 @@ class NotesByEarScreen:
     def __init__(self):
         self.screen = pygame.display.get_surface()
         self.piano = Piano(self.screen)
-        self.game = NotesByEarGame(self.screen, 3)
+        self.game = NotesByEarGame(self.screen, Settings.notes_by_ear)
         self.back = ClassicButton("Back", 50, 30, (440, 460), self.screen)
         self.next = self
         self.game.start_game()
@@ -198,12 +216,15 @@ class SettingsScreen:
         shift = 30
         x = 50
         y = 80
-        self.notes1 = 3
-        self.notes2 = 3
-        self.check_loc = CheckBoxPair(self.screen, x, y, size=size, shift=shift)
+        self.notes1 = Settings.notes_on_stave
+        self.notes2 = Settings.notes_by_ear
+        if Settings.localization == "en":
+            self.check_loc = CheckBoxPair(self.screen, x, y, size=size, shift=shift)
+        else:
+            self.check_loc = CheckBoxPair(self.screen, x, y, size=size, shift=shift, first_check=2)
         self.next = self
         self.back = ClassicButton("Back", 50, 30, (440, 460), self.screen)
-        self.apply = ClassicButton("Apply", 50, 30, (385, 460), self.screen)
+        self.apply = ClassicButton("Apply", 90, 30, (345, 460), self.screen)
         self.choose_loc = TextLabel("Choose the language", 500, 30, (0, 30), self.screen, font=30)
         self.en = TextLabel("English", 110, 30, (x + size + 10, y), self.screen, font=30)
         self.ru = TextLabel("Русский", 110, 30, (x + size + 10, y + size + shift), self.screen, font=30)
@@ -252,6 +273,12 @@ class SettingsScreen:
         if back:
             return MenuScreen()
         if apply:
+            if self.check_loc.which_checked() == 1:
+                Settings.set_localization("en")
+            else:
+                Settings.set_localization("ru")
+            Settings.set_notes_on_stave(self.notes1)
+            Settings.set_notes_by_ear(self.notes2)
             return self
         return self
           
