@@ -14,13 +14,14 @@ class ClassicButton:
 
     TEXT_INTERVAL = 16
 
-    def __init__(self, text, width, height, pos, screen, border=6):
+    def __init__(self, text, width, height, pos, screen, border=6, clickable=True):
         self.top_rect = pygame.Rect(pos, (width, height))
         self.top_color = BORDER
         self.borders = border
         self.pressed = False
         self.frame = 2
         self.screen = screen
+        self.clickable = clickable
         self.text_surf, self.text_rect = list(), list()
         self.text = text.split("\n")
         begin = -((len(self.text)//2)*self.TEXT_INTERVAL - ((len(self.text)+1)%2) * self.TEXT_INTERVAL//2)
@@ -47,7 +48,7 @@ class ClassicButton:
                 self.pressed = False
                 return True
 
-            if self.pressed:
+            if self.pressed and self.clickable:
                 self.top_color = DARK_BLUE
             else:
                 self.top_color = BLUE
@@ -161,7 +162,7 @@ class TextLabel:
 
 class ImageButton:
 
-    def __init__(self, width, height, pos, screen, img_path, border=6):
+    def __init__(self, width, height, pos, screen, img_path, border=6, clickable=True):
         self.screen = screen
         self.width, self.height = width, height
         self.pos = pos
@@ -169,6 +170,7 @@ class ImageButton:
         self.frame = 2
         self.top_color = BORDER
         self.pressed = False
+        self.clickable = clickable
         self.top_rect = pygame.Rect(pos, (width, height))
         self.image = pygame.transform.scale(pygame.image.load(img_path), (width, height))
 
@@ -187,7 +189,7 @@ class ImageButton:
                 self.pressed = False
                 return True
 
-            if self.pressed:
+            if self.pressed and self.clickable:
                 self.top_color = DARK_BLUE
             else:
                 self.top_color = BLUE

@@ -4,6 +4,8 @@ import os
 import random
 from itertools import product
 import pygame
+from stats import StatsRepository
+from datetime import datetime
 
 
 RETRY_ICON = os.path.join(os.getcwd(), "assets", "reload.png")
@@ -36,6 +38,7 @@ class GameProcess:
         self.answer = TextLabel("Guess the note", 100, 50, (200, 100), screen, 70)
         self.retry_btn = ImageButton(50, 50, (195, 180), screen, RETRY_ICON)
         self.next_btn = ImageButton(50, 50, (255, 180), screen, NEXT_ICON)
+        self.stats = StatsRepository()
 
     def start_game(self):
         self.next_note()
@@ -43,6 +46,7 @@ class GameProcess:
     
     def end_game(self):
         self.STOP = True
+        self.stats.add_game("Notes by ear", self.correct, self.maxscore, datetime.now().strftime("%d-%m-%Y"))
 
     def next_note(self):
         if self.generated == self.maxscore:
