@@ -253,6 +253,7 @@ class SettingsScreen:
             return MenuScreen()
         if apply:
             return self
+        return self
           
           
 class StatsScreen:
