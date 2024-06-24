@@ -199,3 +199,64 @@ class ImageButton:
             self.top_color = BORDER
             self.frame = 2
         return False
+
+
+class CheckBoxPair:
+    def __init__(self, surface, x, y, color=(230, 230, 230), outline_color=(0, 0, 0),
+                 check_color=(0, 0, 0), size=30, shift=30, first_check=1):
+        self.collision1 = pygame.Rect((x, y), (size, size))
+        self.collision2 = pygame.Rect((x, y + size + shift), (size, size))
+        self.surface = surface
+        self.x = x
+        self.y = y
+        self.shift = shift
+        self.color = color
+        self.oc = outline_color
+        self.cc = check_color
+        self.size = size
+        self.checkbox1_obj = pygame.Rect(self.x, self.y, size, size)
+        self.checkbox1_outline = self.checkbox1_obj.copy()
+        self.checkbox2_obj = pygame.Rect(self.x, self.y + size + shift, size, size)
+        self.checkbox2_outline = self.checkbox2_obj.copy()
+        if first_check == 1:
+            self.checked1 = True
+            self.checked2 = False
+        else:
+            self.checked1 = False
+            self.checked2 = True
+
+    def draw(self):
+        self.update()
+        if self.checked1:
+            pygame.draw.rect(self.surface, self.color, self.checkbox1_obj)
+            pygame.draw.rect(self.surface, self.oc, self.checkbox1_outline, 1)
+            pygame.draw.circle(self.surface, self.cc, (self.x + self.size // 2, self.y + self.size // 2),
+                           int(self.size * 1 / 3))
+
+            pygame.draw.rect(self.surface, self.color, self.checkbox2_obj)
+            pygame.draw.rect(self.surface, self.oc, self.checkbox2_outline, 1)
+
+        else:
+            pygame.draw.rect(self.surface, self.color, self.checkbox1_obj)
+            pygame.draw.rect(self.surface, self.oc, self.checkbox1_outline, 1)
+
+            pygame.draw.rect(self.surface, self.color, self.checkbox2_obj)
+            pygame.draw.rect(self.surface, self.oc, self.checkbox2_outline, 1)
+            pygame.draw.circle(self.surface, self.cc, (self.x + self.size // 2, self.y + (self.size + self.shift) + self.size // 2),
+                               int(self.size * 1 / 3))
+    def update(self):
+        mouse_pos = pygame.mouse.get_pos()
+        if self.collision1.collidepoint(mouse_pos):
+            if pygame.mouse.get_pressed()[0] and self.checked2:
+                self.checked1 = not self.checked1
+                self.checked2 = not self.checked2
+        elif self.collision2.collidepoint(mouse_pos):
+            if pygame.mouse.get_pressed()[0] and self.checked1:
+                self.checked1 = not self.checked1
+                self.checked2 = not self.checked2
+
+    def which_checked(self):
+        if self.checked1:
+            return 1
+        else:
+            return 2

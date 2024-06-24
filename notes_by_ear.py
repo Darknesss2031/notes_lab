@@ -66,7 +66,7 @@ class GameProcess:
             if not self.guessed:
                 self.correct += 1
                 self.score.update()
-            self.answer = TextLabel(f"Correct! This was {self.current_note.name}", 100, 50, (200, 100), self.screen)
+            self.answer = TextLabel(f"Correct! This was {self.current_note.name}", 100, 50, (200, 100), self.screen, 70)
         else:
             if not self.guessed:
                 self.incorrect += 1

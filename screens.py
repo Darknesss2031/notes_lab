@@ -1,10 +1,31 @@
+import sys
+
 import pygame
-from tools import ClassicButton, SwitchButton, GREEN, TextLabel, ImageButton
+
+from tools import ClassicButton, SwitchButton, GREEN, TextLabel, CheckBoxPair, ImageButton
 import os
 from notes_on_stave import GameProcess as NotesOnStaveGame
 from notes_by_ear import GameProcess as NotesByEarGame
 from piano import Piano
 from stats import StatsRepository
+
+
+class Settings:
+    localization = "en"
+    notes_on_stave = 3
+    notes_by_ear = 3
+
+    @classmethod
+    def set_notes_on_stave(cls, n):
+        cls.notes_on_stave = n
+
+    @classmethod
+    def set_notes_by_ear(cls, n):
+        cls.notes_by_ear = n
+
+    @classmethod
+    def set_localization(cls, loc):
+        cls.localization = loc
 
 
 class MenuScreen:
@@ -39,7 +60,7 @@ class MenuScreen:
         if stats:
             return StatsScreen()
         if setts:
-            return self
+            return SettingsScreen()
         return self
 
 
@@ -48,7 +69,7 @@ class NotesOnStaveScreen:
     def __init__(self):
         self.screen = pygame.display.get_surface()
         self.piano = Piano(self.screen)
-        self.game = NotesOnStaveGame(self.screen, 3)
+        self.game = NotesOnStaveGame(self.screen, Settings.notes_on_stave)
         self.game.start_game()
         self.switch_btn = SwitchButton(50, 20, (225, 260), self.screen,
                                        os.path.join(os.getcwd(), "assets", "key.png"),
@@ -88,47 +109,32 @@ class GameMenuScreen:
 
     def __init__(self):
         self.screen = pygame.display.get_surface()
-        self.stave_btn = ClassicButton("Notes\non the stave", 120, 120, (46, 230), self.screen)
-        self.neck_btn = ClassicButton("Notes\non the neck", 120, 120, (192, 230), self.screen)
-        self.ear_btn = ClassicButton("Notes by ear", 120, 120, (338, 230), self.screen)
-        self.qcof_btn = ClassicButton("Quarto circle\nof fifths", 120, 120, (125, 370), self.screen)
-        self.key_btn = ClassicButton("Key of a melody", 120, 120, (275, 370), self.screen)
+        self.stave_btn = ClassicButton("Notes\non the stave", 120, 120, (106, 280), self.screen)
+        self.ear_btn = ClassicButton("Notes by ear", 120, 120, (278, 280), self.screen)
         self.logo = pygame.image.load(os.path.join(os.getcwd(), "assets", "logo.png"))
         self.logo = pygame.transform.scale(self.logo, (500,200))
         self.back = ClassicButton("Back", 50, 30, (440, 460), self.screen)
         self.stave_setts = False
-        self.neck_stats = False
         self.ear_start = False
-        self.qcof_start = False
-        self.key_start = False
         self.next = self
 
     def draw(self):
         self.screen.fill(GREEN)
         self.clicked_stave = self.stave_btn.draw()
-        self.clicked_neck = self.neck_btn.draw()
         self.clicked_ear = self.ear_btn.draw()
-        self.clicked_qcof = self.qcof_btn.draw()
-        self.clicked_key = self.key_btn.draw()
         self.clicked_back = self.back.draw()
         self.screen.blit(self.logo, (-20, 0))
-        self.next = self.switch(self.clicked_stave, self.clicked_neck, self.clicked_ear, self.clicked_qcof, self.clicked_key, self.clicked_back)
+        self.next = self.switch(self.clicked_stave, self.clicked_ear, self.clicked_back)
         pygame.display.update()
     
     def update(self):
         return self.next
 
-    def switch(self, stave, neck, ear, qcof, key, back):
+    def switch(self, stave, ear, back):
         if stave:
             return NotesOnStaveScreen()
-        if neck:
-            return self
         if ear:
             return NotesByEarScreen()
-        if qcof:
-            return self
-        if key:
-            return self
         if back:
             return MenuScreen()
         return self
@@ -169,7 +175,7 @@ class NotesByEarScreen:
     def __init__(self):
         self.screen = pygame.display.get_surface()
         self.piano = Piano(self.screen)
-        self.game = NotesByEarGame(self.screen, 3)
+        self.game = NotesByEarGame(self.screen, Settings.notes_by_ear)
         self.back = ClassicButton("Back", 50, 30, (440, 460), self.screen)
         self.next = self
         self.game.start_game()
@@ -202,6 +208,81 @@ class NotesByEarScreen:
         return self
 
 
+class SettingsScreen:
+
+    def __init__(self):
+        self.screen = pygame.display.get_surface()
+        size = 25
+        shift = 30
+        x = 50
+        y = 80
+        self.notes1 = Settings.notes_on_stave
+        self.notes2 = Settings.notes_by_ear
+        if Settings.localization == "en":
+            self.check_loc = CheckBoxPair(self.screen, x, y, size=size, shift=shift)
+        else:
+            self.check_loc = CheckBoxPair(self.screen, x, y, size=size, shift=shift, first_check=2)
+        self.next = self
+        self.back = ClassicButton("Back", 50, 30, (440, 460), self.screen)
+        self.apply = ClassicButton("Apply", 90, 30, (345, 460), self.screen)
+        self.choose_loc = TextLabel("Choose the language", 500, 30, (0, 30), self.screen, font=30)
+        self.en = TextLabel("English", 110, 30, (x + size + 10, y), self.screen, font=30)
+        self.ru = TextLabel("Русский", 110, 30, (x + size + 10, y + size + shift), self.screen, font=30)
+        self.choose_diff = TextLabel("Choose the number of notes for each game", 500, 30, (0, 190), self.screen, font=30)
+        self.game1_label = TextLabel("Notes on stave:", 250, 30, (0, 250), self.screen, font=30)
+        self.decrease1 = ClassicButton("-", 30, 30, (250, 250), self.screen)
+        self.notes1_label = TextLabel(f"{self.notes1}", 30, 30, (280, 250), self.screen, font=30)
+        self.increase1 = ClassicButton("+", 30, 30, (310, 250), self.screen)
+        self.game2_label = TextLabel("Notes by ear:", 250, 30, (0, 310), self.screen, font=30)
+        self.decrease2 = ClassicButton("-", 30, 30, (250, 310), self.screen)
+        self.notes2_label = TextLabel(f"{self.notes2}", 30, 30, (280, 310), self.screen, font=30)
+        self.increase2 = ClassicButton("+", 30, 30, (310, 310), self.screen)
+
+    def draw(self):
+        self.screen.fill(GREEN)
+        self.check_loc.draw()
+        self.choose_loc.draw()
+        self.ru.draw()
+        self.en.draw()
+        self.choose_diff.draw()
+        self.game1_label.draw()
+        self.game2_label.draw()
+        if self.decrease1.draw():
+            if self.notes1 > 1:
+                self.notes1 -= 1
+        if self.increase1.draw():
+            self.notes1 += 1
+        self.notes1_label = TextLabel(f"{self.notes1}", 30, 30, (280, 250), self.screen, font=30)
+        self.notes1_label.draw()
+        if self.decrease2.draw():
+            if self.notes2 > 1:
+                self.notes2 -= 1
+        if self.increase2.draw():
+            self.notes2 += 1
+        self.notes2_label = TextLabel(f"{self.notes2}", 30, 30, (280, 310), self.screen, font=30)
+        self.notes2_label.draw()
+        back = self.back.draw()
+        apply = self.apply.draw()
+        self.next = self.switch(back, apply)
+        pygame.display.update()
+
+    def update(self):
+        return self.next
+
+    def switch(self, back, apply):
+        if back:
+            return MenuScreen()
+        if apply:
+            if self.check_loc.which_checked() == 1:
+                Settings.set_localization("en")
+            else:
+                Settings.set_localization("ru")
+            Settings.set_notes_on_stave(self.notes1)
+            Settings.set_notes_by_ear(self.notes2)
+            return self
+        return self
+          
+          
 class StatsScreen:
 
     NEXT_BTN = os.path.join(os.getcwd(), "assets", "next.png")
