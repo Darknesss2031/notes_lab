@@ -1,0 +1,109 @@
+# Russian (Russia) translations for PROJECT.
+# Copyright (C) 2024 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2024-06-25 15:14+0300\n"
+"PO-Revision-Date: 2024-06-25 15:17+0300\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ru_RU\n"
+"Language-Team: ru_RU <LL@li.org>\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.15.0\n"
+
+#: notes_by_ear.py:50 notes_by_ear.py:71
+msgid "Guess the note"
+msgstr "Угадай ноту"
+
+#: notes_by_ear.py:81
+msgid "Correct! This was {}"
+msgstr "Верно! Это была {}"
+
+#: notes_by_ear.py:85
+msgid "Wrong note, try again"
+msgstr "Неверная нота, попробуй ещё"
+
+#: screens.py:43
+msgid "Start"
+msgstr "Начать"
+
+#: screens.py:44
+msgid "Statistics"
+msgstr "Статистика"
+
+#: screens.py:45
+msgid "Settings"
+msgstr "Настройки"
+
+#: screens.py:85 screens.py:124 screens.py:187 screens.py:234 screens.py:311
+msgid "Back"
+msgstr "Назад"
+
+#: screens.py:112 screens.py:215
+msgid "{} of {}"
+msgstr "{} из {}"
+
+#: screens.py:120
+msgid ""
+"Notes\n"
+"on the stave"
+msgstr ""
+"Ноты\n"
+"на стане"
+
+#: screens.py:121
+msgid "Notes by ear"
+msgstr "Ноты на слух"
+
+#: screens.py:155
+msgid "Try again"
+msgstr "Попробуй ещё"
+
+#: screens.py:156
+msgid "Menu"
+msgstr "Меню"
+
+#: screens.py:157
+msgid "GAME OVER!"
+msgstr "Игра окончена!"
+
+#: screens.py:159
+msgid "Your score is: {}"
+msgstr "Твой результат: {}"
+
+#: screens.py:235
+msgid "Apply"
+msgstr "Принять"
+
+#: screens.py:236
+msgid "Choose the language"
+msgstr "Выбери язык"
+
+#: screens.py:239
+msgid "Choose the number of notes for each game"
+msgstr "Выбери кол-во нот для каждой игры"
+
+#: screens.py:240
+msgid "Notes on stave:"
+msgstr "Ноты на стане:"
+
+#: screens.py:244
+msgid "Notes by ear:"
+msgstr "Ноты на слух:"
+
+#: screens.py:310
+msgid "Games History"
+msgstr "История игр"
+
+#: screens.py:318 screens.py:347 screens.py:360
+msgid "Page {}/{}"
+msgstr "Страница {}/{}"
+
