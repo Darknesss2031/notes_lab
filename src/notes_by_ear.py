@@ -1,10 +1,8 @@
-from tools import ClassicButton, ScoreLabel, ImageButton, TextLabel
-from threading import Thread
+from .tools import ClassicButton, ScoreLabel, ImageButton, TextLabel
 import os
 import random
-from itertools import product
 import pygame
-from stats import StatsRepository
+from .stats import StatsRepository
 from datetime import datetime
 import gettext
 
