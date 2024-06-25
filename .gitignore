@@ -9,3 +9,10 @@ source
 build
 source/*
 build/*
+_build
+_static
+_templates
+src/docs
+src/docs/*
+src/docs/*/*
+src/docs/*/*/*
