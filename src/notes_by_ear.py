@@ -15,7 +15,7 @@ notes_for_gen = list(chr(ord('a')+i)+"1" for i in range(7))
 notes_for_gen.append("c2")
 
 LOCALES = {
-    "ru": gettext.translation("loc", f"{os.getcwd()}/loc", ["ru"], fallback=False),
+    "ru": gettext.translation("loc", f"{os.getcwd()}/loc", ["ru"], fallback=True),
     "en": gettext.NullTranslations()
 }
 current_locale = "en"

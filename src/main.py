@@ -8,8 +8,8 @@ from stats import StatsRepository
 
 if __name__ == '__main__':
     pygame.init()
-    if not os.path.exists(os.getcwd() + "/db"):
-        os.mkdir("db")
+    if not os.path.exists(os.path.join(os.getcwd(), "db")):
+        os.mkdir(os.path.join(os.getcwd(), "db"))
     screen = pygame.display.set_mode((500, 500))
     current_screen = MenuScreen()
     StatsRepository().setup()
