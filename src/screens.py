@@ -11,7 +11,7 @@ from piano import Piano
 from stats import StatsRepository
 
 LOCALES = {
-    "ru": gettext.translation("loc", f"{os.getcwd()}/loc", ["ru"], fallback=True),
+    "ru": gettext.translation("loc", f"{os.getcwd()}/src/loc", ["ru"], fallback=False),
     "en": gettext.NullTranslations()
 }
 
