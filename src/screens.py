@@ -2,13 +2,13 @@ import sys
 
 import pygame
 
-from tools import ClassicButton, SwitchButton, GREEN, TextLabel, CheckBoxPair, ImageButton
+from .tools import ClassicButton, SwitchButton, GREEN, TextLabel, CheckBoxPair, ImageButton
 import os
 import gettext
-from notes_on_stave import GameProcess as NotesOnStaveGame
-from notes_by_ear import GameProcess as NotesByEarGame
-from piano import Piano
-from stats import StatsRepository
+from .notes_on_stave import GameProcess as NotesOnStaveGame
+from .notes_by_ear import GameProcess as NotesByEarGame
+from .piano import Piano
+from .stats import StatsRepository
 
 LOCALES = {
     "ru": gettext.translation("loc", f"{os.getcwd()}/src/loc", ["ru"], fallback=False),

@@ -1,14 +1,12 @@
 """This file contains notes on stave game logic"""
 import pygame
 import os
-from queue import Queue
 from time import sleep
-from piano import Piano
-from tools import BLACK, GREEN
+from .tools import BLACK, GREEN
 import random
 from threading import Thread
-from tools import ClassicButton, ScoreLabel
-from stats import StatsRepository
+from .tools import ClassicButton, ScoreLabel
+from .stats import StatsRepository
 from datetime import datetime
 
 

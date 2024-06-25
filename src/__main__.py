@@ -2,8 +2,8 @@ import sys
 import pygame
 import os
 sys.path.append(os.path.abspath(__file__))
-from screens import MenuScreen
-from stats import StatsRepository
+from .screens import MenuScreen
+from .stats import StatsRepository
 
 
 if __name__ == '__main__':
