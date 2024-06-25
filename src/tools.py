@@ -11,6 +11,7 @@ BORDER = (0, 100, 100)
 
 
 class ClassicButton:
+    """Class represents the touch button"""
 
     TEXT_INTERVAL = 16
 
@@ -61,6 +62,7 @@ class ClassicButton:
 
 
 class SwitchButton:
+    """Class represents the switch button"""
 
     def __init__(self, width, height, pos, screen, pic1=None, pic2=None):
         self.border_rect = pygame.Rect(*pos, width, height)
@@ -116,6 +118,7 @@ class SwitchButton:
 
 
 class ScoreLabel:
+    """Class represents the score label"""
     
     def __init__(self, width, height, pos, screen, maxscore):
         self.score = 0
@@ -135,6 +138,7 @@ class ScoreLabel:
         self.score += 1
     
 class TextLabel:
+    """Class represents the text label"""
 
     TEXT_INTERVAL = 16
 
@@ -161,6 +165,7 @@ class TextLabel:
 
 
 class ImageButton:
+    """Class represents the image button"""
 
     def __init__(self, width, height, pos, screen, img_path, border=6, clickable=True):
         self.screen = screen
@@ -202,6 +207,8 @@ class ImageButton:
 
 
 class CheckBoxPair:
+    """Class represents the pair of check boxes"""
+
     def __init__(self, surface, x, y, color=(230, 230, 230), outline_color=(0, 0, 0),
                  check_color=(0, 0, 0), size=30, shift=30, first_check=1):
         self.collision1 = pygame.Rect((x, y), (size, size))
@@ -244,6 +251,7 @@ class CheckBoxPair:
             pygame.draw.rect(self.surface, self.oc, self.checkbox2_outline, 1)
             pygame.draw.circle(self.surface, self.cc, (self.x + self.size // 2, self.y + (self.size + self.shift) + self.size // 2),
                                int(self.size * 1 / 3))
+
     def update(self):
         mouse_pos = pygame.mouse.get_pos()
         if self.collision1.collidepoint(mouse_pos):
@@ -256,6 +264,8 @@ class CheckBoxPair:
                 self.checked2 = not self.checked2
 
     def which_checked(self):
+        """Returns 1 if the first check box is checked, 2 if the second check box is checked"""
+
         if self.checked1:
             return 1
         else:

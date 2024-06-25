@@ -3,6 +3,7 @@ from tools import WHITE, BLACK, GRAY
 
 
 class WhiteButton:
+    """Class represents the white piano button"""
 
     def __init__(self, name, width, height, pos, screen, blacks):
         self.name = name
@@ -44,6 +45,7 @@ class WhiteButton:
 
 
 class BlackButton:
+    """Class represents the black piano button"""
 
     def __init__(self, name, width, height, pos, screen):
         self.name = name
@@ -81,6 +83,7 @@ class BlackButton:
 
 
 class Piano:
+    """Class represents the piano"""
 
     START_POS_WHITE = 75
     START_POS_BLACK = START_POS_WHITE+40

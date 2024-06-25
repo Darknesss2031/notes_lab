@@ -4,13 +4,23 @@ import pygame
 
 from tools import ClassicButton, SwitchButton, GREEN, TextLabel, CheckBoxPair, ImageButton
 import os
+import gettext
 from notes_on_stave import GameProcess as NotesOnStaveGame
 from notes_by_ear import GameProcess as NotesByEarGame
 from piano import Piano
 from stats import StatsRepository
 
+LOCALES = {
+    "ru": gettext.translation("loc", f"{os.getcwd()}/loc", ["ru"], fallback=False),
+    "en": gettext.NullTranslations()
+}
+
+def _(text):
+    return LOCALES[Settings.localization].gettext(text)
 
 class Settings:
+    """Class to storage the settings of the game"""
+
     localization = "en"
     notes_on_stave = 3
     notes_by_ear = 3
@@ -29,12 +39,13 @@ class Settings:
 
 
 class MenuScreen:
+    """Class representing the screen of the menu"""
 
     def __init__(self):
         self.screen = pygame.display.get_surface()
-        self.start_btn = ClassicButton("Start", 200, 40, (150, 230), self.screen, 0)
-        self.stats_btn = ClassicButton("Statistics", 200, 40, (150, 280), self.screen, 0)
-        self.setts_btn = ClassicButton("Settings", 200, 40, (150, 330), self.screen, 0)
+        self.start_btn = ClassicButton(_("Start"), 200, 40, (150, 230), self.screen, 0)
+        self.stats_btn = ClassicButton(_("Statistics"), 200, 40, (150, 280), self.screen, 0)
+        self.setts_btn = ClassicButton(_("Settings"), 200, 40, (150, 330), self.screen, 0)
         self.logo = pygame.image.load(os.path.join(os.getcwd(), "assets", "logo.png"))
         self.logo = pygame.transform.scale(self.logo, (500,200))
         self.clicked_setts = False
@@ -65,6 +76,7 @@ class MenuScreen:
 
 
 class NotesOnStaveScreen:
+    """Class represents the screen of notes on stave game"""
 
     def __init__(self):
         self.screen = pygame.display.get_surface()
@@ -74,7 +86,7 @@ class NotesOnStaveScreen:
         self.switch_btn = SwitchButton(50, 20, (225, 260), self.screen,
                                        os.path.join(os.getcwd(), "assets", "key.png"),
                                        os.path.join(os.getcwd(), "assets", "bass.png"))
-        self.back = ClassicButton("Back", 50, 30, (440, 460), self.screen)
+        self.back = ClassicButton(_("Back"), 50, 30, (440, 460), self.screen)
         self.next = self
 
     def draw(self):
@@ -101,19 +113,20 @@ class NotesOnStaveScreen:
             return GameMenuScreen()
         if finished:
             self.game.end_game()
-            return GameOverScreen(NotesOnStaveScreen, f"{self.game.correct} of {self.game.maxscore}")
+            return GameOverScreen(NotesOnStaveScreen, _("{} of {}").format(self.game.correct, self.game.maxscore))
         return self
 
 
 class GameMenuScreen:
+    """Class represents the screen of game menu"""
 
     def __init__(self):
         self.screen = pygame.display.get_surface()
-        self.stave_btn = ClassicButton("Notes\non the stave", 120, 120, (106, 280), self.screen)
-        self.ear_btn = ClassicButton("Notes by ear", 120, 120, (278, 280), self.screen)
+        self.stave_btn = ClassicButton(_("Notes\non the stave"), 120, 120, (106, 280), self.screen)
+        self.ear_btn = ClassicButton(_("Notes by ear"), 120, 120, (278, 280), self.screen)
         self.logo = pygame.image.load(os.path.join(os.getcwd(), "assets", "logo.png"))
         self.logo = pygame.transform.scale(self.logo, (500,200))
-        self.back = ClassicButton("Back", 50, 30, (440, 460), self.screen)
+        self.back = ClassicButton(_("Back"), 50, 30, (440, 460), self.screen)
         self.stave_setts = False
         self.ear_start = False
         self.next = self
@@ -141,14 +154,15 @@ class GameMenuScreen:
 
 
 class GameOverScreen:
+    """Class represents the screen of the game ending"""
 
     def __init__(self, again_screen, score=""):
         self.screen = pygame.display.get_surface()
-        self.retry_btn = ClassicButton("Try again", 200, 40, (150, 250), self.screen, 0)
-        self.menu_btn = ClassicButton("Menu", 200, 40, (150, 300), self.screen, 0)
-        self.label = TextLabel("GAME OVER!", 200, 50, (150, 100), self.screen, 50)
+        self.retry_btn = ClassicButton(_("Try again"), 200, 40, (150, 250), self.screen, 0)
+        self.menu_btn = ClassicButton(_("Menu"), 200, 40, (150, 300), self.screen, 0)
+        self.label = TextLabel(_("GAME OVER!"), 200, 50, (150, 100), self.screen, 50)
         self.again_screen = again_screen
-        self.results = TextLabel(f"Your score is: {score}", 200, 30, (150, 200), self.screen, 20)
+        self.results = TextLabel(_("Your score is: {}").format(score), 200, 30, (150, 200), self.screen, 20)
 
     def draw(self):
         self.screen.fill(GREEN)
@@ -171,12 +185,13 @@ class GameOverScreen:
 
 
 class NotesByEarScreen:
+    """Class represents the screen of the notes by ear game"""
 
     def __init__(self):
         self.screen = pygame.display.get_surface()
         self.piano = Piano(self.screen)
-        self.game = NotesByEarGame(self.screen, Settings.notes_by_ear)
-        self.back = ClassicButton("Back", 50, 30, (440, 460), self.screen)
+        self.game = NotesByEarGame(self.screen, Settings.notes_by_ear, loc=Settings.localization)
+        self.back = ClassicButton(_("Back"), 50, 30, (440, 460), self.screen)
         self.next = self
         self.game.start_game()
 
@@ -204,11 +219,12 @@ class NotesByEarScreen:
             return GameMenuScreen()
         if finished:
             self.game.end_game()
-            return GameOverScreen(NotesByEarScreen, f"{self.game.correct} of {self.game.maxscore}")
+            return GameOverScreen(NotesByEarScreen, _("{} of {}").format(self.game.correct, self.game.maxscore))
         return self
 
 
 class SettingsScreen:
+    """Class represents the screen of the settings"""
 
     def __init__(self):
         self.screen = pygame.display.get_surface()
@@ -223,17 +239,17 @@ class SettingsScreen:
         else:
             self.check_loc = CheckBoxPair(self.screen, x, y, size=size, shift=shift, first_check=2)
         self.next = self
-        self.back = ClassicButton("Back", 50, 30, (440, 460), self.screen)
-        self.apply = ClassicButton("Apply", 90, 30, (345, 460), self.screen)
-        self.choose_loc = TextLabel("Choose the language", 500, 30, (0, 30), self.screen, font=30)
+        self.back = ClassicButton(_("Back"), 50, 30, (440, 460), self.screen)
+        self.apply = ClassicButton(_("Apply"), 90, 30, (345, 460), self.screen)
+        self.choose_loc = TextLabel(_("Choose the language"), 500, 30, (0, 30), self.screen, font=30)
         self.en = TextLabel("English", 110, 30, (x + size + 10, y), self.screen, font=30)
         self.ru = TextLabel("Русский", 110, 30, (x + size + 10, y + size + shift), self.screen, font=30)
-        self.choose_diff = TextLabel("Choose the number of notes for each game", 500, 30, (0, 190), self.screen, font=30)
-        self.game1_label = TextLabel("Notes on stave:", 250, 30, (0, 250), self.screen, font=30)
+        self.choose_diff = TextLabel(_("Choose the number of notes for each game"), 500, 30, (0, 190), self.screen, font=30)
+        self.game1_label = TextLabel(_("Notes on stave:"), 250, 30, (0, 250), self.screen, font=30)
         self.decrease1 = ClassicButton("-", 30, 30, (250, 250), self.screen)
         self.notes1_label = TextLabel(f"{self.notes1}", 30, 30, (280, 250), self.screen, font=30)
         self.increase1 = ClassicButton("+", 30, 30, (310, 250), self.screen)
-        self.game2_label = TextLabel("Notes by ear:", 250, 30, (0, 310), self.screen, font=30)
+        self.game2_label = TextLabel(_("Notes by ear:"), 250, 30, (0, 310), self.screen, font=30)
         self.decrease2 = ClassicButton("-", 30, 30, (250, 310), self.screen)
         self.notes2_label = TextLabel(f"{self.notes2}", 30, 30, (280, 310), self.screen, font=30)
         self.increase2 = ClassicButton("+", 30, 30, (310, 310), self.screen)
@@ -279,11 +295,12 @@ class SettingsScreen:
                 Settings.set_localization("ru")
             Settings.set_notes_on_stave(self.notes1)
             Settings.set_notes_by_ear(self.notes2)
-            return self
+            return MenuScreen()
         return self
           
           
 class StatsScreen:
+    """Class represents the screen of the statistics"""
 
     NEXT_BTN = os.path.join(os.getcwd(), "assets", "next.png")
     PREV_BTN = os.path.join(os.getcwd(), "assets", "prev.png")
@@ -299,15 +316,15 @@ class StatsScreen:
         )
         self.next = self
         self.current_page = 1
-        self.name = TextLabel("Games History", 200, 30, (150, 60), self.screen)
-        self.back = ClassicButton("Back", 50, 30, (440, 460), self.screen)
+        self.name = TextLabel(_("Games History"), 200, 30, (150, 60), self.screen)
+        self.back = ClassicButton(_("Back"), 50, 30, (440, 460), self.screen)
         self.total_pages = max(1, (self.stats.number_of_games()+self.limit-1) // self.limit)
-        self.previous_btn = ImageButton(30, 30, (175, 420), self.screen, self.PREV_BTN, clickable=False)
+        self.previous_btn = ImageButton(30, 30, (115, 420), self.screen, self.PREV_BTN, clickable=False)
         if self.total_pages == 1:
-            self.next_btn = ImageButton(30, 30, (295, 420), self.screen, self.NEXT_BTN, clickable=False)
+            self.next_btn = ImageButton(30, 30, (355, 420), self.screen, self.NEXT_BTN, clickable=False)
         else:
-            self.next_btn = ImageButton(30, 30, (295, 420), self.screen, self.NEXT_BTN)
-        self.pages_label = TextLabel(f"Page {self.current_page}/{self.total_pages}", 90, 30, (205, 420), self.screen, 30)
+            self.next_btn = ImageButton(30, 30, (355, 420), self.screen, self.NEXT_BTN)
+        self.pages_label = TextLabel(_("Page {}/{}").format(self.current_page, self.total_pages), 90, 30, (205, 420), self.screen, 30)
 
     def draw(self):
         self.screen.fill(GREEN)
@@ -336,7 +353,7 @@ class StatsScreen:
         self.games_list = list(
             ClassicButton(f"{data[i][1]}        {data[i][2]}/{data[i][3]}        {data[i][4]}", 250, 30, (125, 100+i*28), self.screen, clickable=False, border=0) for i in range(len(data))
         )
-        self.pages_label = TextLabel(f"Page {self.current_page}/{self.total_pages}", 90, 30, (205, 420), self.screen, 30)
+        self.pages_label = TextLabel(_("Page {}/{}").format(self.current_page, self.total_pages), 90, 30, (205, 420), self.screen, 30)
 
     def previous_page(self):
         self.offset -= self.limit
@@ -349,7 +366,7 @@ class StatsScreen:
         self.games_list = list(
             ClassicButton(f"{data[i][1]}        {data[i][2]}/{data[i][3]}        {data[i][4]}", 250, 30, (125, 100+i*28), self.screen, clickable=False, border=0) for i in range(len(data))
         )
-        self.pages_label = TextLabel(f"Page {self.current_page}/{self.total_pages}", 90, 30, (205, 420), self.screen, 30)
+        self.pages_label = TextLabel(_("Page {}/{}").format(self.current_page, self.total_pages), 90, 30, (205, 420), self.screen, 30)
 
     def update(self):
         return self.next
