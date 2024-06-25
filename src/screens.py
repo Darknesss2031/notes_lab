@@ -19,6 +19,8 @@ def _(text):
     return LOCALES[Settings.localization].gettext(text)
 
 class Settings:
+    """Class to storage the settings of the game"""
+
     localization = "en"
     notes_on_stave = 3
     notes_by_ear = 3
@@ -37,6 +39,7 @@ class Settings:
 
 
 class MenuScreen:
+    """Class representing the screen of the menu"""
 
     def __init__(self):
         self.screen = pygame.display.get_surface()
@@ -73,6 +76,7 @@ class MenuScreen:
 
 
 class NotesOnStaveScreen:
+    """Class represents the screen of notes on stave game"""
 
     def __init__(self):
         self.screen = pygame.display.get_surface()
@@ -114,6 +118,7 @@ class NotesOnStaveScreen:
 
 
 class GameMenuScreen:
+    """Class represents the screen of game menu"""
 
     def __init__(self):
         self.screen = pygame.display.get_surface()
@@ -149,6 +154,7 @@ class GameMenuScreen:
 
 
 class GameOverScreen:
+    """Class represents the screen of the game ending"""
 
     def __init__(self, again_screen, score=""):
         self.screen = pygame.display.get_surface()
@@ -179,6 +185,7 @@ class GameOverScreen:
 
 
 class NotesByEarScreen:
+    """Class represents the screen of the notes by ear game"""
 
     def __init__(self):
         self.screen = pygame.display.get_surface()
@@ -217,6 +224,7 @@ class NotesByEarScreen:
 
 
 class SettingsScreen:
+    """Class represents the screen of the settings"""
 
     def __init__(self):
         self.screen = pygame.display.get_surface()
@@ -292,6 +300,7 @@ class SettingsScreen:
           
           
 class StatsScreen:
+    """Class represents the screen of the statistics"""
 
     NEXT_BTN = os.path.join(os.getcwd(), "assets", "next.png")
     PREV_BTN = os.path.join(os.getcwd(), "assets", "prev.png")

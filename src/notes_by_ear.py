@@ -20,11 +20,13 @@ LOCALES = {
 }
 current_locale = "en"
 
+
 def _(text):
     return LOCALES[current_locale].gettext(text)
 
 
 class Note:
+    """Class representing note sound"""
 
     def __init__(self, name):
         self.name = name
@@ -35,6 +37,7 @@ class Note:
 
 
 class GameProcess:
+    """Class for main gaming process"""
 
     STOP = False
 

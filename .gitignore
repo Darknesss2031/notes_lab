@@ -1,7 +1,11 @@
 Pipfile.lock
-db/*
-db
+src/db/*
+src/db
 .idea
 __pycache__
 loc.pot
 loc/ru_RU.UTF-8/LC_MESSAGES/*.mo
+source
+build
+source/*
+build/*

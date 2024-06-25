@@ -4,6 +4,7 @@ from functools import cache
 
 
 class StatsRepository:
+    """Class to interact with statistics database"""
 
     def __init__(self):
         self.db_path = os.path.join("db", "storage.db")
