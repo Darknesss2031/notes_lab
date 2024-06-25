@@ -310,11 +310,11 @@ class StatsScreen:
         self.name = TextLabel(_("Games History"), 200, 30, (150, 60), self.screen)
         self.back = ClassicButton(_("Back"), 50, 30, (440, 460), self.screen)
         self.total_pages = max(1, (self.stats.number_of_games()+self.limit-1) // self.limit)
-        self.previous_btn = ImageButton(30, 30, (175, 420), self.screen, self.PREV_BTN, clickable=False)
+        self.previous_btn = ImageButton(30, 30, (115, 420), self.screen, self.PREV_BTN, clickable=False)
         if self.total_pages == 1:
-            self.next_btn = ImageButton(30, 30, (295, 420), self.screen, self.NEXT_BTN, clickable=False)
+            self.next_btn = ImageButton(30, 30, (355, 420), self.screen, self.NEXT_BTN, clickable=False)
         else:
-            self.next_btn = ImageButton(30, 30, (295, 420), self.screen, self.NEXT_BTN)
+            self.next_btn = ImageButton(30, 30, (355, 420), self.screen, self.NEXT_BTN)
         self.pages_label = TextLabel(_("Page {}/{}").format(self.current_page, self.total_pages), 90, 30, (205, 420), self.screen, 30)
 
     def draw(self):
