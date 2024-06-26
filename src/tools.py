@@ -1,5 +1,6 @@
-import pygame
+"""This file contains tools for GUI."""
 
+import pygame
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -11,11 +12,13 @@ BORDER = (0, 100, 100)
 
 
 class ClassicButton:
-    """Class represents the touch button"""
+    """Class represents the touch button."""
 
     TEXT_INTERVAL = 16
 
-    def __init__(self, text, width, height, pos, screen, border=6, clickable=True):
+    def __init__(self, text, width, height, pos, screen,
+                 border=6, clickable=True):
+        """Initialise function for classic button class."""
         self.top_rect = pygame.Rect(pos, (width, height))
         self.top_color = BORDER
         self.borders = border
@@ -25,22 +28,30 @@ class ClassicButton:
         self.clickable = clickable
         self.text_surf, self.text_rect = list(), list()
         self.text = text.split("\n")
-        begin = -((len(self.text)//2)*self.TEXT_INTERVAL - ((len(self.text)+1)%2) * self.TEXT_INTERVAL//2)
+        begin = -((len(self.text) // 2)*self.TEXT_INTERVAL -
+                  ((len(self.text) + 1) % 2) * self.TEXT_INTERVAL//2)
         for i, line in enumerate(self.text):
-            self.text_surf.append(m := pygame.font.Font(None, 20).render(line, True, '#000000'))
-            self.text_rect.append(m.get_rect(centerx=self.top_rect.centerx, centery=self.top_rect.centery+begin))
+            self.text_surf.append(m := pygame.font.Font(None, 20)
+                                  .render(line, True, '#000000'))
+            self.text_rect.append(
+                m.get_rect(centerx=self.top_rect.centerx,
+                           centery=self.top_rect.centery+begin)
+            )
             begin += self.TEXT_INTERVAL
 
     def draw(self):
-        pygame.draw.rect(self.screen, self.top_color, self.top_rect, self.frame, border_radius=self.borders)
+        """Call to draw the classic button."""
+        pygame.draw.rect(self.screen, self.top_color,
+                         self.top_rect, self.frame,
+                         border_radius=self.borders)
         for surf, rect in zip(self.text_surf, self.text_rect):
             self.screen.blit(surf, rect)
         if self.covered():
             return True
         return False
-    
+
     def covered(self):
-        """Returns True if the button was pressed, False otherwise"""
+        """Return True if the button was pressed, False otherwise."""
         mouse_pos = pygame.mouse.get_pos()
         if self.top_rect.collidepoint(mouse_pos):
             if pygame.mouse.get_pressed()[0]:
@@ -62,15 +73,20 @@ class ClassicButton:
 
 
 class SwitchButton:
-    """Class represents the switch button"""
+    """Class represents the switch button."""
 
     def __init__(self, width, height, pos, screen, pic1=None, pic2=None):
+        """Initialise function for switch button class."""
         self.border_rect = pygame.Rect(*pos, width, height)
         self.inside_rect = pygame.Rect(*pos, width, height)
         self.switch_rect = pygame.Rect(pos[0]+1, pos[1]+1, width/2-1, height-2)
         self.pictures = {
-            True: pygame.transform.scale(pygame.image.load(pic1), (width/2-1, height-2)) if pic1 else None,
-            False: pygame.transform.scale(pygame.image.load(pic2), (width/2-1, height-2)) if pic2 else None
+            True: pygame.transform.scale(
+                pygame.image.load(pic1), (width/2-1, height-2)
+            ) if pic1 else None,
+            False: pygame.transform.scale(
+                pygame.image.load(pic2), (width/2-1, height-2)
+            ) if pic2 else None
         }
         self.positions = {
             True: (pos[0]+1, pos[1]+1),
@@ -85,6 +101,7 @@ class SwitchButton:
         self.screen = screen
 
     def draw(self):
+        """Call to draw the switch button."""
         pygame.draw.rect(self.screen, GRAY, self.inside_rect)
         pygame.draw.rect(self.screen, BORDER, self.border_rect, 2)
         pygame.draw.rect(self.screen, BLACK, self.switch_rect)
@@ -98,6 +115,7 @@ class SwitchButton:
         return False
 
     def covered(self):
+        """Return True if the button was pressed, False otherwise."""
         mouse_pos = pygame.mouse.get_pos()
         if self.border_rect.collidepoint(mouse_pos):
             clicked = pygame.mouse.get_pressed()[0]
@@ -109,65 +127,88 @@ class SwitchButton:
         return False
 
     def switch(self):
+        """Switch the mode of switch button."""
         if self.mode:
-            self.switch_rect.update(self.pos[0]+self.width/2, self.pos[1]+1, self.width/2-1, self.height-2)
+            self.switch_rect.update(self.pos[0]+self.width/2, self.pos[1]+1,
+                                    self.width/2-1, self.height-2)
             self.mode = False
         else:
-            self.switch_rect.update(self.pos[0]+1, self.pos[1]+1, self.width/2-1, self.height-2)
+            self.switch_rect.update(self.pos[0]+1, self.pos[1]+1,
+                                    self.width/2-1, self.height-2)
             self.mode = True
 
 
 class ScoreLabel:
-    """Class represents the score label"""
-    
+    """Class represents the score label."""
+
     def __init__(self, width, height, pos, screen, maxscore):
+        """Initialise function for score label class."""
         self.score = 0
         self.maxscore = maxscore
         self.rect = pygame.Rect(*pos, width, height)
-        self.text = pygame.font.Font(None, 20).render(f"{self.score}/{self.maxscore}", True, "#000000")
-        self.text_rect = self.text.get_rect(centerx=self.rect.centerx, centery=self.rect.centery)
+        self.text = pygame.font.Font(None, 20).render(
+            f"{self.score}/{self.maxscore}", True, "#000000"
+        )
+        self.text_rect = self.text.get_rect(
+            centerx=self.rect.centerx, centery=self.rect.centery
+        )
         self.screen = screen
 
     def draw(self):
-        self.text = pygame.font.Font(None, 20).render(f"{self.score}/{self.maxscore}", True, "#000000")
-        self.text_rect = self.text.get_rect(centerx=self.rect.centerx, centery=self.rect.centery)
+        """Call to draw the score label."""
+        self.text = pygame.font.Font(None, 20).render(
+            f"{self.score}/{self.maxscore}", True, "#000000"
+        )
+        self.text_rect = self.text.get_rect(
+            centerx=self.rect.centerx, centery=self.rect.centery
+        )
         pygame.draw.rect(self.screen, BLACK, self.rect, 2, border_radius=6)
         self.screen.blit(self.text, self.text_rect)
 
     def update(self):
+        """Call to increase the score of score label."""
         self.score += 1
-    
+
+
 class TextLabel:
-    """Class represents the text label"""
+    """Class represents the text label."""
 
     TEXT_INTERVAL = 16
 
     def __init__(self, text, width, height, pos, screen, font=20, **kwargs):
+        """Initialise function for text label class."""
         self.top_rect = pygame.Rect(pos, (width, height))
         self.top_color = GREEN
         self.pressed = False
         self.screen = screen
         self.text_surf, self.text_rect = list(), list()
         self.text = text.split("\n")
-        begin = -((len(self.text)//2)*self.TEXT_INTERVAL - ((len(self.text)+1)%2) * self.TEXT_INTERVAL//2)
+        begin = -((len(self.text) // 2)*self.TEXT_INTERVAL -
+                  ((len(self.text) + 1) % 2) * self.TEXT_INTERVAL // 2)
         for i, line in enumerate(self.text):
             fnt = pygame.font.Font(None, font)
             fnt.bold = kwargs.get("bold", False)
             fnt.italic = kwargs.get("italic", False)
             self.text_surf.append(m := fnt.render(line, True, '#000000'))
-            self.text_rect.append(m.get_rect(centerx=self.top_rect.centerx, centery=self.top_rect.centery+begin))
+            self.text_rect.append(m.get_rect(
+                centerx=self.top_rect.centerx,
+                centery=self.top_rect.centery+begin
+            ))
             begin += self.TEXT_INTERVAL
-    
+
     def draw(self):
+        """Call to draw the text label."""
         pygame.draw.rect(self.screen, self.top_color, self.top_rect)
         for surf, rect in zip(self.text_surf, self.text_rect):
             self.screen.blit(surf, rect)
 
 
 class ImageButton:
-    """Class represents the image button"""
+    """Class represents the image button."""
 
-    def __init__(self, width, height, pos, screen, img_path, border=6, clickable=True):
+    def __init__(self, width, height, pos, screen, img_path,
+                 border=6, clickable=True):
+        """Initialise function for image button class."""
         self.screen = screen
         self.width, self.height = width, height
         self.pos = pos
@@ -177,15 +218,20 @@ class ImageButton:
         self.pressed = False
         self.clickable = clickable
         self.top_rect = pygame.Rect(pos, (width, height))
-        self.image = pygame.transform.scale(pygame.image.load(img_path), (width, height))
+        self.image = pygame.transform.scale(
+            pygame.image.load(img_path), (width, height)
+        )
 
     def draw(self):
-        pygame.draw.rect(self.screen, self.top_color, self.top_rect, self.frame, border_radius=self.border)
+        """Call to draw the image button."""
+        pygame.draw.rect(self.screen, self.top_color,
+                         self.top_rect, self.frame,
+                         border_radius=self.border)
         self.screen.blit(self.image, self.pos)
         return self.covered()
 
     def covered(self):
-        """Returns True if the button was pressed, False otherwise"""
+        """Return True if the button was pressed, False otherwise."""
         mouse_pos = pygame.mouse.get_pos()
         if self.top_rect.collidepoint(mouse_pos):
             if pygame.mouse.get_pressed()[0]:
@@ -207,10 +253,12 @@ class ImageButton:
 
 
 class CheckBoxPair:
-    """Class represents the pair of check boxes"""
+    """Class represents the pair of check boxes."""
 
-    def __init__(self, surface, x, y, color=(230, 230, 230), outline_color=(0, 0, 0),
-                 check_color=(0, 0, 0), size=30, shift=30, first_check=1):
+    def __init__(self, surface, x, y, color=(230, 230, 230),
+                 outline_color=(0, 0, 0), check_color=(0, 0, 0),
+                 size=30, shift=30, first_check=1):
+        """Initialise function for the pair of check boxes."""
         self.collision1 = pygame.Rect((x, y), (size, size))
         self.collision2 = pygame.Rect((x, y + size + shift), (size, size))
         self.surface = surface
@@ -223,7 +271,8 @@ class CheckBoxPair:
         self.size = size
         self.checkbox1_obj = pygame.Rect(self.x, self.y, size, size)
         self.checkbox1_outline = self.checkbox1_obj.copy()
-        self.checkbox2_obj = pygame.Rect(self.x, self.y + size + shift, size, size)
+        self.checkbox2_obj = pygame.Rect(self.x, self.y + size + shift,
+                                         size, size)
         self.checkbox2_outline = self.checkbox2_obj.copy()
         if first_check == 1:
             self.checked1 = True
@@ -233,12 +282,15 @@ class CheckBoxPair:
             self.checked2 = True
 
     def draw(self):
+        """Call to draw the pair of check boxes."""
         self.update()
         if self.checked1:
             pygame.draw.rect(self.surface, self.color, self.checkbox1_obj)
             pygame.draw.rect(self.surface, self.oc, self.checkbox1_outline, 1)
-            pygame.draw.circle(self.surface, self.cc, (self.x + self.size // 2, self.y + self.size // 2),
-                           int(self.size * 1 / 3))
+            pygame.draw.circle(self.surface, self.cc,
+                               (self.x + self.size // 2,
+                                self.y + self.size // 2),
+                               int(self.size * 1 / 3))
 
             pygame.draw.rect(self.surface, self.color, self.checkbox2_obj)
             pygame.draw.rect(self.surface, self.oc, self.checkbox2_outline, 1)
@@ -249,24 +301,32 @@ class CheckBoxPair:
 
             pygame.draw.rect(self.surface, self.color, self.checkbox2_obj)
             pygame.draw.rect(self.surface, self.oc, self.checkbox2_outline, 1)
-            pygame.draw.circle(self.surface, self.cc, (self.x + self.size // 2, self.y + (self.size + self.shift) + self.size // 2),
+            pygame.draw.circle(self.surface, self.cc,
+                               (self.x + self.size // 2,
+                                self.y + (self.size + self.shift)
+                                + self.size // 2),
                                int(self.size * 1 / 3))
 
+    def switch_checked(self):
+        """Switch the checks of check boxes."""
+        self.checked1 = not self.checked1
+        self.checked2 = not self.checked2
+
     def update(self):
+        """Call to update the pair of check boxes."""
         mouse_pos = pygame.mouse.get_pos()
         if self.collision1.collidepoint(mouse_pos):
             if pygame.mouse.get_pressed()[0] and self.checked2:
-                self.checked1 = not self.checked1
-                self.checked2 = not self.checked2
+                self.switch_checked()
         elif self.collision2.collidepoint(mouse_pos):
             if pygame.mouse.get_pressed()[0] and self.checked1:
-                self.checked1 = not self.checked1
-                self.checked2 = not self.checked2
+                self.switch_checked()
 
     def which_checked(self):
-        """Returns 1 if the first check box is checked, 2 if the second check box is checked"""
+        """Return 1 if the first check box is checked.
 
+        2 if the second check box is checked.
+        """
         if self.checked1:
             return 1
-        else:
-            return 2
+        return 2

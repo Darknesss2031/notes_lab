@@ -1,9 +1,11 @@
+"""This module is the main module of the notes_lab game."""
 import sys
 import pygame
 import os
+from .screens import MenuScreen
+from .stats import StatsRepository
+
 sys.path.append(os.path.abspath(__file__))
-from screens import MenuScreen
-from stats import StatsRepository
 
 
 if __name__ == '__main__':

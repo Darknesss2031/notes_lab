@@ -4,13 +4,18 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-pygame = "*"
 playsound = "*"
 pydub = "*"
-babel = "*"
-sphinx = "*"
 
 [dev-packages]
+pygame = "*"
+babel = "*"
+sphinx = "*"
+pybabel = "*"
+doit = "*"
+pydocstyle = "*"
+flake8 = "*"
+setuptools = "*"
 
 [requires]
 python_version = "3.10"
