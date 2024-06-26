@@ -9,13 +9,15 @@ from datetime import datetime
 import gettext
 
 
-RETRY_ICON = os.path.join(os.getcwd(), "assets", "reload.png")
-NEXT_ICON = os.path.join(os.getcwd(), "assets", "forward-button.png")
+RETRY_ICON = os.path.join(os.path.dirname(__file__), "..", "assets", "reload.png")
+NEXT_ICON = os.path.join(os.path.dirname(__file__), "..", "assets", "forward-button.png")
 notes_for_gen = list(chr(ord('a')+i)+"1" for i in range(7))
 notes_for_gen.append("c2")
 
+print(os.path.join(__file__, "src/loc"))
+
 LOCALES = {
-    "ru": gettext.translation("loc", f"{os.getcwd()}/src/loc",
+    "ru": gettext.translation("loc", os.path.join(os.path.dirname(__file__), "loc"),
                               ["ru"], fallback=False),
     "en": gettext.NullTranslations()
 }
@@ -32,8 +34,8 @@ class Note:
     def __init__(self, name):
         """Initialise function for note class."""
         self.name = name
-        self.sound = pygame.mixer.Sound(os.path.join(os.getcwd(),
-                                                     "assets", name+".mp3"))
+        self.sound = pygame.mixer.Sound(os.path.join(os.path.dirname(__file__),
+                                                     "..", "assets", name+".mp3"))
 
     def play(self):
         """Call to play the sound of object."""

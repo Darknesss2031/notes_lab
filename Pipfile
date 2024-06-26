@@ -4,11 +4,9 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-playsound = "*"
-pydub = "*"
+pygame = "*"
 
 [dev-packages]
-pygame = "*"
 babel = "*"
 sphinx = "*"
 pybabel = "*"

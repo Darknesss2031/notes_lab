@@ -9,7 +9,7 @@ class StatsRepository:
 
     def __init__(self):
         """Initialise function of stats repository class."""
-        self.db_path = os.path.join("db", "storage.db")
+        self.db_path = os.path.join(os.path.dirname(__file__), "..", "db", "storage.db")
         self.connection = sqlite3.connect(self.db_path)
 
     def setup(self):

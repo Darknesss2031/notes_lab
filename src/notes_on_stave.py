@@ -49,8 +49,8 @@ class Note:
         self.underline = Line(BLACK, [x+10, y+12], 20,
                               screen) if underline else None
         self.extra = Line(BLACK, [x+10, y], 20, screen) if extra else None
-        self.icon = pygame.image.load(os.path.join(os.getcwd(),
-                                                   "assets", icon))
+        self.icon = pygame.image.load(os.path.join(os.path.dirname(__file__),
+                                                   "..", "assets", icon))
         self.icon = pygame.transform.scale(self.icon, (50, 50))
 
     def draw(self):
@@ -85,8 +85,8 @@ class Stave:
         self.pos = pos
         self.lines = []
         self.notes = []
-        self.key = pygame.image.load(os.path.join(os.getcwd(),
-                                                  "assets", "key.png"))
+        self.key = pygame.image.load(os.path.join(os.path.dirname(__file__),
+                                                "..", "assets", "key.png"))
         self.key = pygame.transform.scale(self.key, (100, 100))
         colors = [BLACK, GREEN]
         off_pos = list(self.pos)
@@ -141,8 +141,8 @@ class GameProcess:
     LAST_GEN = 0
     GAME_MODE = "TREB"
     KEY_PATH = {
-        "TREB": os.path.join(os.getcwd(), "assets", "key.png"),
-        "BASS": os.path.join(os.getcwd(), "assets", "bass.png")
+        "TREB": os.path.join(os.path.dirname(__file__), "..", "assets", "key.png"),
+        "BASS": os.path.join(os.path.dirname(__file__), "..", "assets", "bass.png")
     }
 
     def __init__(self, screen, maxscore=30, alter=False):

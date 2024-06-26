@@ -11,9 +11,11 @@ from .notes_by_ear import GameProcess as NotesByEarGame
 from .piano import Piano
 from .stats import StatsRepository
 
+print(os.getcwd())
+
 LOCALES = {
     "ru": gettext.translation("loc",
-                              f"{os.getcwd()}/src/loc",
+                              os.path.join(os.path.dirname(__file__), "loc"),
                               ["ru"], fallback=False),
     "en": gettext.NullTranslations()
 }
@@ -59,8 +61,8 @@ class MenuScreen:
                                        40, (150, 280), self.screen, 0)
         self.setts_btn = ClassicButton(_("Settings"), 200,
                                        40, (150, 330), self.screen, 0)
-        self.logo = pygame.image.load(os.path.join(os.getcwd(),
-                                                   "assets", "logo.png"))
+        self.logo = pygame.image.load(os.path.join(os.path.dirname(__file__),
+                                                   "..", "assets", "logo.png"))
         self.logo = pygame.transform.scale(self.logo, (500, 200))
         self.clicked_setts = False
         self.clicked_stats = False
@@ -104,10 +106,10 @@ class NotesOnStaveScreen:
         self.game.start_game()
         self.switch_btn = SwitchButton(50, 20, (225, 260),
                                        self.screen,
-                                       os.path.join(os.getcwd(),
-                                                    "assets", "key.png"),
-                                       os.path.join(os.getcwd(),
-                                                    "assets", "bass.png"))
+                                       os.path.join(os.path.dirname(__file__),
+                                                    "..", "assets", "key.png"),
+                                       os.path.join(os.path.dirname(__file__),
+                                                    "..", "assets", "bass.png"))
         self.back = ClassicButton(_("Back"), 50, 30, (440, 460), self.screen)
         self.next = self
 
@@ -153,8 +155,8 @@ class GameMenuScreen:
                                        120, 120, (106, 280), self.screen)
         self.ear_btn = ClassicButton(_("Notes by ear"),
                                      120, 120, (278, 280), self.screen)
-        self.logo = pygame.image.load(os.path.join(os.getcwd(),
-                                                   "assets", "logo.png"))
+        self.logo = pygame.image.load(os.path.join(os.path.dirname(__file__),
+                                                   "..", "assets", "logo.png"))
         self.logo = pygame.transform.scale(self.logo, (500, 200))
         self.back = ClassicButton(_("Back"), 50, 30, (440, 460), self.screen)
         self.stave_setts = False
@@ -389,8 +391,8 @@ class SettingsScreen:
 class StatsScreen:
     """Class represents the screen of the statistics."""
 
-    NEXT_BTN = os.path.join(os.getcwd(), "assets", "next.png")
-    PREV_BTN = os.path.join(os.getcwd(), "assets", "prev.png")
+    NEXT_BTN = os.path.join(os.path.dirname(__file__), "..", "assets", "next.png")
+    PREV_BTN = os.path.join(os.path.dirname(__file__), "..", "assets", "prev.png")
 
     def __init__(self):
         """Initialise function for stats screen."""
