@@ -86,7 +86,7 @@ class Stave:
         self.lines = []
         self.notes = []
         self.key = pygame.image.load(os.path.join(os.path.dirname(__file__),
-                                                "..", "assets", "key.png"))
+                                                  "..", "assets", "key.png"))
         self.key = pygame.transform.scale(self.key, (100, 100))
         colors = [BLACK, GREEN]
         off_pos = list(self.pos)
@@ -141,8 +141,10 @@ class GameProcess:
     LAST_GEN = 0
     GAME_MODE = "TREB"
     KEY_PATH = {
-        "TREB": os.path.join(os.path.dirname(__file__), "..", "assets", "key.png"),
-        "BASS": os.path.join(os.path.dirname(__file__), "..", "assets", "bass.png")
+        "TREB": os.path.join(os.path.dirname(__file__),
+                             "..", "assets", "key.png"),
+        "BASS": os.path.join(os.path.dirname(__file__),
+                             "..", "assets", "bass.png")
     }
 
     def __init__(self, screen, maxscore=30, alter=False):

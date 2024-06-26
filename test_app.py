@@ -1,7 +1,7 @@
 import unittest
 import pygame
-from src.tools import CheckBoxPair, SwitchButton
-from src.screens import MenuScreen, GameMenuScreen, SettingsScreen, NotesOnStaveScreen, GameOverScreen
+from app.src.tools import CheckBoxPair, SwitchButton
+from app.src.screens import MenuScreen, GameMenuScreen, SettingsScreen, NotesOnStaveScreen, GameOverScreen
 
 
 class TestCheckBoxPair(unittest.TestCase):

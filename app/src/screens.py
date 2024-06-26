@@ -11,8 +11,6 @@ from .notes_by_ear import GameProcess as NotesByEarGame
 from .piano import Piano
 from .stats import StatsRepository
 
-print(os.getcwd())
-
 LOCALES = {
     "ru": gettext.translation("loc",
                               os.path.join(os.path.dirname(__file__), "loc"),
@@ -109,7 +107,8 @@ class NotesOnStaveScreen:
                                        os.path.join(os.path.dirname(__file__),
                                                     "..", "assets", "key.png"),
                                        os.path.join(os.path.dirname(__file__),
-                                                    "..", "assets", "bass.png"))
+                                                    "..", "assets", "bass.png")
+                                       )
         self.back = ClassicButton(_("Back"), 50, 30, (440, 460), self.screen)
         self.next = self
 
@@ -391,8 +390,10 @@ class SettingsScreen:
 class StatsScreen:
     """Class represents the screen of the statistics."""
 
-    NEXT_BTN = os.path.join(os.path.dirname(__file__), "..", "assets", "next.png")
-    PREV_BTN = os.path.join(os.path.dirname(__file__), "..", "assets", "prev.png")
+    NEXT_BTN = os.path.join(os.path.dirname(__file__), "..",
+                            "assets", "next.png")
+    PREV_BTN = os.path.join(os.path.dirname(__file__), "..",
+                            "assets", "prev.png")
 
     def __init__(self):
         """Initialise function for stats screen."""

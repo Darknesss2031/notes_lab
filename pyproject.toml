@@ -10,7 +10,7 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.package-dir]
-notes_lab = "."
+notes_lab = "app"
 
 [tool.setuptools.package-data]
-notes_lab = ["src/*/*/*/*.mo", "_build/**", "assets/**"]
+notes_lab = ["app/src/*/*/*/*.mo", "app/_build/**", "app/assets/**"]
