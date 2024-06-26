@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-06-26 14:37+0300\n"
+"POT-Creation-Date: 2024-06-26 15:40+0300\n"
 "PO-Revision-Date: 2024-06-25 18:01+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru_RU\n"
@@ -19,40 +19,40 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.15.0\n"
 
-#: src/notes_by_ear.py:65 src/notes_by_ear.py:91
+#: app/src/notes_by_ear.py:65 app/src/notes_by_ear.py:91
 msgid "Guess the note"
 msgstr "Угадай ноту"
 
-#: src/notes_by_ear.py:105
+#: app/src/notes_by_ear.py:105
 msgid "Correct! This was {}"
 msgstr "Верно! Это была {}"
 
-#: src/notes_by_ear.py:111
+#: app/src/notes_by_ear.py:111
 msgid "Wrong note, try again"
 msgstr "Неверная нота, попробуй ещё"
 
-#: src/screens.py:58
+#: app/src/screens.py:56
 msgid "Start"
 msgstr "Начать"
 
-#: src/screens.py:60
+#: app/src/screens.py:58
 msgid "Statistics"
 msgstr "Статистика"
 
-#: src/screens.py:62
+#: app/src/screens.py:60
 msgid "Settings"
 msgstr "Настройки"
 
-#: src/screens.py:114 src/screens.py:162 src/screens.py:246 src/screens.py:303
-#: src/screens.py:418
+#: app/src/screens.py:112 app/src/screens.py:160 app/src/screens.py:244
+#: app/src/screens.py:301 app/src/screens.py:416
 msgid "Back"
 msgstr "Назад"
 
-#: src/screens.py:144 src/screens.py:278
+#: app/src/screens.py:142 app/src/screens.py:276
 msgid "{} of {}"
 msgstr "{} из {}"
 
-#: src/screens.py:155
+#: app/src/screens.py:153
 msgid ""
 "Notes\n"
 "on the stave"
@@ -60,51 +60,51 @@ msgstr ""
 "Ноты\n"
 "на стане"
 
-#: src/screens.py:157
+#: app/src/screens.py:155
 msgid "Notes by ear"
 msgstr "Ноты на слух"
 
-#: src/screens.py:199
+#: app/src/screens.py:197
 msgid "Try again"
 msgstr "Попробуй ещё"
 
-#: src/screens.py:202
+#: app/src/screens.py:200
 msgid "Menu"
 msgstr "Меню"
 
-#: src/screens.py:205
+#: app/src/screens.py:203
 msgid "GAME OVER!"
 msgstr "Игра окончена!"
 
-#: src/screens.py:209
+#: app/src/screens.py:207
 msgid "Your score is: {}"
 msgstr "Твой результат: {}"
 
-#: src/screens.py:305
+#: app/src/screens.py:303
 msgid "Apply"
 msgstr "Применить"
 
-#: src/screens.py:307
+#: app/src/screens.py:305
 msgid "Choose the language"
 msgstr "Выбери язык"
 
-#: src/screens.py:315
+#: app/src/screens.py:313
 msgid "Choose the number of notes for each game"
 msgstr "Выбери кол-во нот для каждой игры"
 
-#: src/screens.py:319
+#: app/src/screens.py:317
 msgid "Notes on stave:"
 msgstr "Ноты на стане:"
 
-#: src/screens.py:329
+#: app/src/screens.py:327
 msgid "Notes by ear:"
 msgstr "Ноты на слух:"
 
-#: src/screens.py:416
+#: app/src/screens.py:414
 msgid "Games History"
 msgstr "История игр"
 
-#: src/screens.py:432 src/screens.py:473 src/screens.py:498
+#: app/src/screens.py:430 app/src/screens.py:471 app/src/screens.py:496
 msgid "Page {}/{}"
 msgstr "Страница {}/{}"
 

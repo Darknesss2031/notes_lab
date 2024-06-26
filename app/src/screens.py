@@ -11,8 +11,6 @@ from .notes_by_ear import GameProcess as NotesByEarGame
 from .piano import Piano
 from .stats import StatsRepository
 
-print(os.getcwd())
-
 LOCALES = {
     "ru": gettext.translation("loc",
                               os.path.join(os.path.dirname(__file__), "loc"),
