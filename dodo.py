@@ -41,11 +41,10 @@ def task_html():
             'clean': [(shutil.rmtree, ["_build"])],
             }
 
-# def task_test():
-#     return {
-#             'actions': ['python -m unittest test_server.py', 'python3 -m unittest test_client.py'],
-#             'task_dep': ['i18n'],
-#             }
+def task_test():
+    return {
+            'actions': ['python -m unittest test_app.py'],
+            }
 
 # def task_wheel():
 #         return {

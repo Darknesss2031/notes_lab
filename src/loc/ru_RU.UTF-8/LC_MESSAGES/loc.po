@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-06-25 17:49+0300\n"
+"POT-Creation-Date: 2024-06-26 11:12+0300\n"
 "PO-Revision-Date: 2024-06-25 18:01+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru_RU\n"
@@ -19,15 +19,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.15.0\n"
 
-#: src/notes_by_ear.py:53 src/notes_by_ear.py:74
+#: src/notes_by_ear.py:51 src/notes_by_ear.py:72
 msgid "Guess the note"
 msgstr "Угадай ноту"
 
-#: src/notes_by_ear.py:84
+#: src/notes_by_ear.py:82
 msgid "Correct! This was {}"
 msgstr "Верно! Это была {}"
 
-#: src/notes_by_ear.py:88
+#: src/notes_by_ear.py:86
 msgid "Wrong note, try again"
 msgstr "Неверная нота, попробуй ещё"
 

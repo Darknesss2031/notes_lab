@@ -252,21 +252,22 @@ class CheckBoxPair:
             pygame.draw.circle(self.surface, self.cc, (self.x + self.size // 2, self.y + (self.size + self.shift) + self.size // 2),
                                int(self.size * 1 / 3))
 
+    def switch_checked(self):
+        self.checked1 = not self.checked1
+        self.checked2 = not self.checked2
+
     def update(self):
         mouse_pos = pygame.mouse.get_pos()
         if self.collision1.collidepoint(mouse_pos):
             if pygame.mouse.get_pressed()[0] and self.checked2:
-                self.checked1 = not self.checked1
-                self.checked2 = not self.checked2
+                self.switch_checked()
         elif self.collision2.collidepoint(mouse_pos):
             if pygame.mouse.get_pressed()[0] and self.checked1:
-                self.checked1 = not self.checked1
-                self.checked2 = not self.checked2
+                self.switch_checked()
 
     def which_checked(self):
         """Returns 1 if the first check box is checked, 2 if the second check box is checked"""
 
         if self.checked1:
             return 1
-        else:
-            return 2
+        return 2
