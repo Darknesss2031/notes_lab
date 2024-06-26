@@ -18,3 +18,7 @@ _templates
 .doit.db
 db
 db/*
+dist
+dist/*
+notes_lab.egg-info
+notes_lab.egg-info/*

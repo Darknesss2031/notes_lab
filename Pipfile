@@ -13,6 +13,7 @@ pybabel = "*"
 doit = "*"
 pydocstyle = "*"
 flake8 = "*"
+build = "*"
 setuptools = "*"
 
 [requires]
