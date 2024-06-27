@@ -41,6 +41,7 @@ def task_html():
             'actions': ['sphinx-build -M html docs app/_build'],
             'file_dep': glob.glob('docs/*.rst') + glob.glob('app/src/*.py'),
             'targets': ['docs'],
+            'task_dep': ['i18n']
             }
 
 
