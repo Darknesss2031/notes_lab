@@ -13,4 +13,4 @@ build-backend = "setuptools.build_meta"
 notes_lab = "app"
 
 [tool.setuptools.package-data]
-notes_lab = ["app/src/*/*/*/*.mo", "app/_build/**", "app/assets/**"]
+notes_lab = ["src/*/*/*/*.mo", "_build/**", "assets/**"]
